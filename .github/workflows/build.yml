@@ -1,0 +1,50 @@
+name: build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  windows:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Restore
+        run: dotnet restore DwmFix.sln
+
+      - name: Build
+        run: dotnet build DwmFix.sln --configuration Release --no-restore
+
+      - name: Smoke test
+        run: dotnet run --project tests/DwmFix.Core.SmokeTests/DwmFix.Core.SmokeTests.csproj --configuration Release --no-build
+
+      - name: Publish win-x64
+        run: >
+          dotnet publish src/DwmFix.App/DwmFix.App.csproj
+          --configuration Release
+          --runtime win-x64
+          --self-contained true
+          -p:PublishSingleFile=true
+          -p:PublishReadyToRun=false
+          -p:IncludeNativeLibrariesForSelfExtract=true
+          --output artifacts/win-x64
+
+      - name: Package
+        shell: pwsh
+        run: Compress-Archive -Path artifacts/win-x64/* -DestinationPath artifacts/DwmFix-win-x64.zip -Force
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: DwmFix-win-x64
+          path: artifacts/DwmFix-win-x64.zip

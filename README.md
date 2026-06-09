@@ -1,17 +1,43 @@
-# DWMfix
+# DwmFix
 
-## The Problem
-Windows 11 aggressive energy-saving features can sometimes throttle Desktop Window Manager (DWM) composition on secondary displays or when playing full-screen games, resulting in a perceived stutter on secondary screens.
+DwmFix is a native Windows tray utility that keeps Desktop Window Manager composition active on selected displays. It is a clean .NET rewrite of the original Python/PyQt prototype.
 
-## The Solution
-DWMfix is a background utility that forces the Windows DWM to maintain high-performance composition by constantly rendering an imperceptible transparent widget. This prevents the OS from putting the rendering layer into a low-power, low-refresh state, keeping your second monitor stutter-free.
+The app renders a tiny click-through layered window on the target monitor. The window is almost fully transparent, does not activate, does not appear in Alt+Tab, and can be started automatically with Windows.
 
-## How to use
-1. Run `DWMfix.exe`.
-2. A control panel will appear where you can manage the tool, toggle boost mode, or hide it to the system tray.
-3. Keep it running in the tray while gaming or using your secondary monitor.
+## Features
 
-## Support the Developer
-If this tool helped you fix your dual monitor stuttering, consider supporting the development!
+- Native tray app, no Python runtime.
+- Single-instance behavior. Launching the app again opens settings.
+- Auto-targets secondary displays by default.
+- Optional explicit monitor selection.
+- Normal and boost rendering modes.
+- Configurable render FPS.
+- Per-user autostart through the Windows Run registry key.
+- JSON settings in `%AppData%\DwmFix\settings.json`.
+- GitHub Actions build that publishes a self-contained `DwmFix.exe`.
 
-[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/pixelcraft404)
+## Usage
+
+1. Run `DwmFix.exe`.
+2. Use the tray icon to enable or disable the fix, toggle boost mode, choose monitors, or open settings.
+3. Enable `Start with Windows` when the behavior looks good on your setup.
+
+## Build
+
+Requirements:
+
+- Windows
+- .NET 10 SDK
+
+```powershell
+dotnet restore DwmFix.sln
+dotnet build DwmFix.sln -c Release
+dotnet run --project tests/DwmFix.Core.SmokeTests/DwmFix.Core.SmokeTests.csproj -c Release --no-build
+dotnet publish src/DwmFix.App/DwmFix.App.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -o artifacts/win-x64
+```
+
+The executable is written to `artifacts/win-x64/DwmFix.exe`.
+
+## Attribution
+
+This repository is forked from `Arccalc/Dwmfix` and remains MIT licensed. See `NOTICE.md` for rewrite notes.

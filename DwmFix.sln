@@ -1,0 +1,33 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DwmFix.Core", "src\DwmFix.Core\DwmFix.Core.csproj", "{7A83BA06-A08E-4689-B8ED-E81BEAB67BAA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DwmFix.App", "src\DwmFix.App\DwmFix.App.csproj", "{08BF891C-9764-4F00-9A0C-564A69D3F2A9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DwmFix.Core.SmokeTests", "tests\DwmFix.Core.SmokeTests\DwmFix.Core.SmokeTests.csproj", "{1E0C7895-1500-4CD7-8671-F9CF0CC8D52B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7A83BA06-A08E-4689-B8ED-E81BEAB67BAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A83BA06-A08E-4689-B8ED-E81BEAB67BAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A83BA06-A08E-4689-B8ED-E81BEAB67BAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A83BA06-A08E-4689-B8ED-E81BEAB67BAA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{08BF891C-9764-4F00-9A0C-564A69D3F2A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08BF891C-9764-4F00-9A0C-564A69D3F2A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08BF891C-9764-4F00-9A0C-564A69D3F2A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08BF891C-9764-4F00-9A0C-564A69D3F2A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E0C7895-1500-4CD7-8671-F9CF0CC8D52B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E0C7895-1500-4CD7-8671-F9CF0CC8D52B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E0C7895-1500-4CD7-8671-F9CF0CC8D52B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E0C7895-1500-4CD7-8671-F9CF0CC8D52B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
