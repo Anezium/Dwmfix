@@ -12,7 +12,7 @@ internal sealed class SettingsForm : Form
     private readonly CheckedListBox _displayList;
     private readonly NumericUpDown _fpsInput;
 
-    public SettingsForm(AppSettings settings, IReadOnlyList<MonitorInfo> monitors, bool startWithWindows)
+    public SettingsForm(AppSettings settings, IReadOnlyList<MonitorInfo> monitors, bool startWithWindows, Icon appIcon)
     {
         ArgumentNullException.ThrowIfNull(settings);
         ArgumentNullException.ThrowIfNull(monitors);
@@ -23,7 +23,8 @@ internal sealed class SettingsForm : Form
         FormBorderStyle = FormBorderStyle.FixedDialog;
         MaximizeBox = false;
         MinimizeBox = false;
-        ShowIcon = false;
+        Icon = appIcon;
+        ShowIcon = true;
         ShowInTaskbar = false;
         StartPosition = FormStartPosition.CenterScreen;
 

@@ -8,6 +8,7 @@ internal sealed class TrayApplicationContext : ApplicationContext
     private readonly SettingsStore _settingsStore;
     private readonly StartupService _startupService;
     private readonly DwmStimulusManager _stimulusManager;
+    private readonly Icon _appIcon;
     private readonly NotifyIcon _trayIcon;
     private readonly SingleInstancePipeServer _pipeServer;
     private AppSettings _settings;
@@ -21,6 +22,7 @@ internal sealed class TrayApplicationContext : ApplicationContext
 
         _startupService = new StartupService(Application.ExecutablePath);
         _stimulusManager = new DwmStimulusManager();
+        _appIcon = LoadAppIcon();
         _trayIcon = CreateTrayIcon();
 
         SystemEvents.DisplaySettingsChanged += OnDisplaySettingsChanged;
@@ -49,6 +51,7 @@ internal sealed class TrayApplicationContext : ApplicationContext
         _stimulusManager.Dispose();
         _trayIcon.Visible = false;
         _trayIcon.Dispose();
+        _appIcon.Dispose();
 
         base.ExitThreadCore();
     }
@@ -57,7 +60,7 @@ internal sealed class TrayApplicationContext : ApplicationContext
     {
         var trayIcon = new NotifyIcon
         {
-            Icon = SystemIcons.Application,
+            Icon = _appIcon,
             Text = "DwmFix",
             Visible = true,
         };
@@ -136,7 +139,7 @@ internal sealed class TrayApplicationContext : ApplicationContext
             return;
         }
 
-        _settingsForm = new SettingsForm(_settings.Clone(), MonitorCatalog.GetMonitors(), _startupService.IsEnabled());
+        _settingsForm = new SettingsForm(_settings.Clone(), MonitorCatalog.GetMonitors(), _startupService.IsEnabled(), _appIcon);
         _settingsForm.SettingsApplied += (_, args) =>
         {
             _settings = args.Settings;
@@ -215,5 +218,18 @@ internal sealed class TrayApplicationContext : ApplicationContext
     {
         _stimulusManager.Apply(_settings);
         RefreshTrayMenu();
+    }
+
+    private static Icon LoadAppIcon()
+    {
+        try
+        {
+            return Icon.ExtractAssociatedIcon(Application.ExecutablePath)
+                ?? (Icon)SystemIcons.Application.Clone();
+        }
+        catch
+        {
+            return (Icon)SystemIcons.Application.Clone();
+        }
     }
 }
