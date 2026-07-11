@@ -9,7 +9,7 @@
     <ApplicationIcon>..\..\assets\dwmfix-icon.ico</ApplicationIcon>
     <AssemblyName>DwmFix</AssemblyName>
     <RootNamespace>DwmFix.App</RootNamespace>
-    <Version>2.0.1</Version>
+    <Version>2.0.2</Version>
     <Authors>Anezium; Arccalc</Authors>
     <Description>Native Windows tray utility to keep DWM composition active on selected monitors.</Description>
   </PropertyGroup>
