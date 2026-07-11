@@ -5,6 +5,10 @@ namespace DwmFix.App;
 
 internal sealed class StimulusWindow : Form
 {
+    // Near-black on purpose: the 60 fps repaint is what keeps DWM composing, not the
+    // brightness — vivid colors ghost as a faint grey bar over dark content.
+    private const double StimulusValue = 0.012;
+
     private readonly System.Windows.Forms.Timer _renderTimer;
     private Screen _screen;
     private bool _boostMode;
@@ -20,7 +24,7 @@ internal sealed class StimulusWindow : Form
         BackColor = Color.Black;
         DoubleBuffered = true;
         FormBorderStyle = FormBorderStyle.None;
-        Opacity = 0.01;
+        Opacity = 0.004;
         ShowIcon = false;
         ShowInTaskbar = false;
         StartPosition = FormStartPosition.Manual;
@@ -97,8 +101,8 @@ internal sealed class StimulusWindow : Form
         {
             using var brush = new LinearGradientBrush(
                 ClientRectangle,
-                ColorFromHsv(_hue, saturation: 0.85, value: 1.0),
-                ColorFromHsv((_hue + 180) % 360, saturation: 0.85, value: 1.0),
+                ColorFromHsv(_hue, saturation: 0.85, value: StimulusValue),
+                ColorFromHsv((_hue + 180) % 360, saturation: 0.85, value: StimulusValue),
                 LinearGradientMode.Horizontal);
             e.Graphics.FillRectangle(brush, ClientRectangle);
         }
@@ -141,7 +145,7 @@ internal sealed class StimulusWindow : Form
         for (var i = 0; i < slices; i++)
         {
             var hue = (_hue + i * (360 / slices)) % 360;
-            using var brush = new SolidBrush(ColorFromHsv(hue, saturation: 0.9, value: 1.0));
+            using var brush = new SolidBrush(ColorFromHsv(hue, saturation: 0.9, value: StimulusValue));
             graphics.FillPie(
                 brush,
                 center.X - radius,
